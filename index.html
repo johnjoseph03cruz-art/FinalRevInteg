@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Final Exam Reviewer - 80 Items Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes popIn {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop { animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">CTINPRGL Master Reviewer</h1>
+                    <p class="text-xs text-slate-400">80-Item Comprehensive Final Examination Quiz</p>
+                </div>
+            </div>
+            <div id="quiz-stats-header" class="hidden items-center space-x-6 text-sm">
+                <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/50">
+                    <span class="text-slate-400">Question:</span>
+                    <span id="header-current-q" class="font-bold text-indigo-400">1</span>
+                    <span class="text-slate-500">/</span>
+                    <span id="header-total-q" class="font-bold text-slate-300">80</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/50">
+                    <span class="text-slate-400">Score:</span>
+                    <span id="header-score" class="font-bold text-emerald-400">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-grow flex items-center justify-center">
+
+        <!-- Welcome View -->
+        <div id="view-welcome" class="w-full bg-slate-900/90 border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-xl animate-pop text-center space-y-6">
+            <div class="inline-flex p-4 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 text-indigo-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">JavaScript Final Exam Assessment</h2>
+            <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Test your mastery across all weeks of the JavaScript course curriculum—covering DOM Structure, Manipulation, Events, Propagation, Forms, Validation, Asynchronous Programming, Promises, Async/Await, and HTTP/JSON Integration.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-xl mx-auto pt-2 pb-4 text-xs">
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50">
+                    <span class="block font-bold text-indigo-400 text-sm">80 Items</span>
+                    <span class="text-slate-400">Multiple Choice</span>
+                </div>
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50">
+                    <span class="block font-bold text-purple-400 text-sm">Quizizz Mode</span>
+                    <span class="text-slate-400">Instant Feedback</span>
+                </div>
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/50">
+                    <span class="block font-bold text-emerald-400 text-sm">Jumbled Qs</span>
+                    <span class="text-slate-400">Randomized Order</span>
+                </div>
+            </div>
+            <div>
+                <button onclick="startQuiz()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-base">
+                    Start 80-Item Quiz Now
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Play View -->
+        <div id="view-quiz" class="w-full hidden space-y-6">
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700/50">
+                <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl animate-pop space-y-6">
+                <!-- Topic Tag & Number -->
+                <div class="flex justify-between items-center">
+                    <span id="question-tag" class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold rounded-full">Week 7.1</span>
+                    <span class="text-slate-400 text-xs font-medium">Question <span id="current-q-num">1</span> of 80</span>
+                </div>
+
+                <!-- Question Text -->
+                <h3 id="question-text" class="text-lg md:text-xl font-semibold text-white leading-snug">
+                    Loading question...
+                </h3>
+
+                <!-- Options Container -->
+                <div id="options-container" class="grid grid-cols-1 gap-3 pt-2">
+                    <!-- Dynamically populated options -->
+                </div>
+
+                <!-- Feedback & Rationale Box -->
+                <div id="feedback-box" class="hidden p-4 rounded-2xl border text-sm space-y-2 animate-pop">
+                    <div id="feedback-header" class="font-bold flex items-center space-x-2">
+                        <!-- Correct/Incorrect badge -->
+                    </div>
+                    <p id="feedback-rationale" class="text-slate-300 text-xs md:text-sm leading-relaxed"></p>
+                </div>
+
+                <!-- Next Button Footer -->
+                <div class="flex justify-end pt-4 border-t border-slate-800">
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg transition-all text-sm flex items-center space-x-2">
+                        <span>Next Question</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results View -->
+        <div id="view-results" class="w-full hidden bg-slate-900/90 border border-slate-800 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-xl animate-pop text-center space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-3xl font-extrabold text-white">Quiz Completed!</h2>
+                <p class="text-slate-400 text-sm">Here is a breakdown of your performance across the 80 items.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto py-4">
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700/50">
+                    <span class="block text-slate-400 text-xs uppercase tracking-wider">Final Score</span>
+                    <span id="result-score" class="text-3xl font-extrabold text-indigo-400">0 / 80</span>
+                </div>
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700/50">
+                    <span class="block text-slate-400 text-xs uppercase tracking-wider">Percentage</span>
+                    <span id="result-percentage" class="text-3xl font-extrabold text-emerald-400">0%</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 pt-4">
+                <button onclick="restartQuiz()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg transition-all text-sm">
+                    Retake Quiz (Jumble Again)
+                </button>
+                <button onclick="reviewAnswers()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl border border-slate-700 transition-all text-sm">
+                    Review Answers
+                </button>
+            </div>
+        </div>
+
+        <!-- Review Modal / View -->
+        <div id="view-review" class="w-full hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-900/90 p-4 rounded-2xl border border-slate-800">
+                <h3 class="font-bold text-lg text-white">Detailed Answer Review</h3>
+                <button onclick="backToResults()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-xl border border-slate-700 text-slate-200">
+                    Back to Results
+                </button>
+            </div>
+            <div id="review-list" class="space-y-4">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 text-xs text-slate-500 border-t border-slate-800/80">
+        <p>CTINPRGL JavaScript Final Examination Reviewer • Quiz Application</p>
+    </footer>
+
+    <!-- Quiz Data & Script -->
+    <script>
+        const originalQuizData = [
+            // Week 7.1: DOM Structure and Selection (Items 1 - 10)
+            {
+                questionNumber: 1,
+                question: "What is the live object representation of an HTML document in the browser?",
+                answerOptions: [
+                    { text: "The Document Object Model (DOM)", isCorrect: true, rationale: "The DOM is the live object representation of an HTML document where JavaScript modifies objects and the browser updates the page." },
+                    { text: "The Static Source Tree", isCorrect: false, rationale: "The original source is static text; once parsed by the browser, it becomes the live DOM." },
+                    { text: "The JavaScript Engine Core", isCorrect: false, rationale: "The JS engine executes code, whereas the DOM represents the document nodes." },
+                    { text: "The Global Window Object", isCorrect: false, rationale: "While window is the global container, the DOM specifically refers to document representation." }
+                ],
+                hint: "It allows JavaScript to interact with and modify web pages.",
+                tags: ["DOM", "Week 7.1"]
+            },
+            {
+                questionNumber: 2,
+                question: "Which property refers specifically to the `<html>` element root?",
+                answerOptions: [
+                    { text: "document.documentElement", isCorrect: true, rationale: "document.documentElement specifically refers to the root `<html>` element of the document." },
+                    { text: "document.body", isCorrect: false, rationale: "document.body refers specifically to the `<body>` element." },
+                    { text: "document.rootNode", isCorrect: false, rationale: "document.rootNode is not the standard property name for the html root." },
+                    { text: "document.html", isCorrect: false, rationale: "document.html does not exist as a standard document property." }
+                ],
+                hint: "It accesses the root element of the document.",
+                tags: ["DOM", "Week 7.1"]
+            },
+            {
+                questionNumber: 3,
+                question: "What does `document.getElementById(\"title\")` expect as its argument?",
+                answerOptions: [
+                    { text: "An ID string without the '#' symbol", isCorrect: true, rationale: "getElementById expects the ID name directly without CSS selector symbols like '#' or '.'." },
+                    { text: "A CSS selector including '#'", isCorrect: false, rationale: "Including '#' will result in null because it looks for an ID literal containing the hash character." },
+                    { text: "A class name starting with '.'", isCorrect: false, rationale: "getElementById targets element IDs, not classes." },
+                    { text: "Any HTML tag name", isCorrect: false, rationale: "TagName is used for tag names, not getElementById." }
+                ],
+                hint: "Do not include CSS selector symbols like hash tags.",
+                tags: ["DOM", "Selection", "Week 7.1"]
+            },
+            {
+                questionNumber: 4,
+                question: "What does `document.querySelectorAll(\".card\")` return?",
+                answerOptions: [
+                    { text: "A static NodeList of all matching elements", isCorrect: true, rationale: "querySelectorAll returns a static NodeList of all matching elements (empty if none)." },
+                    { text: "A live HTMLCollection updating automatically", isCorrect: false, rationale: "querySelectorAll returns a static NodeList, unlike getElementsByClassName which is live." },
+                    { text: "The single first matching element", isCorrect: false, rationale: "querySelector returns the first match, whereas querySelectorAll returns all matches." },
+                    { text: "An Array instance directly with map and filter methods", isCorrect: false, rationale: "It returns a NodeList (which has forEach but requires Array.from for full array methods)." }
+                ],
+                hint: "It gathers multiple matching nodes into a static list.",
+                tags: ["DOM", "Selection", "Week 7.1"]
+            },
+            {
+                questionNumber: 5,
+                question: "What happens if `querySelector` finds no matching elements?",
+                answerOptions: [
+                    { text: "It returns `null`", isCorrect: true, rationale: "Selection methods like querySelector return null if no matching elements are found." },
+                    { text: "It throws a ReferenceError", isCorrect: false, rationale: "It gracefully returns null rather than throwing an exception." },
+                    { text: "It returns an empty string `\"\"`", isCorrect: false, rationale: "It returns null, not an empty string." },
+                    { text: "It creates a new empty element", isCorrect: false, rationale: "It does not auto-create elements when selectors miss." }
+                ],
+                hint: "Think about the standard null return value for missing DOM queries.",
+                tags: ["DOM", "Selection", "Week 7.1"]
+            },
+            {
+                questionNumber: 6,
+                question: "Why must you iterate over a NodeList when applying a class change to multiple items?",
+                answerOptions: [
+                    { text: "Because a collection is not a single element", isCorrect: true, rationale: "A collection represents multiple nodes; property modifications must be iterated across each item." },
+                    { text: "Because NodeLists are read-only and immutable", isCorrect: false, rationale: "NodeLists can be iterated and their items manipulated; they aren't completely immutable." },
+                    { text: "Because CSS classes cannot be applied in batches", isCorrect: false, rationale: "Iteration is needed because the collection object itself lacks direct single-element methods." },
+                    { text: "To prevent memory leaks in the browser", isCorrect: false, rationale: "Iteration is purely for targeting each node individually." }
+                ],
+                hint: "A collection contains multiple elements, not just one.",
+                tags: ["DOM", "NodeList", "Week 7.1"]
+            },
+            {
+                questionNumber: 7,
+                question: "What is a characteristic of a static NodeList returned by `querySelectorAll`?",
+                answerOptions: [
+                    { text: "It does not automatically include elements added after the query", isCorrect: true, rationale: "Static NodeLists do not auto-update when new matching elements are added to the DOM later." },
+                    { text: "It updates automatically when DOM elements change", isCorrect: false, rationale: "Live collections update automatically; static NodeLists do not." },
+                    { text: "It automatically converts into a JavaScript Array", isCorrect: false, rationale: "It remains a NodeList unless explicitly converted." },
+                    { text: "It throws an error if DOM structure changes", isCorrect: false, rationale: "It does not throw errors on DOM mutation." }
+                ],
+                hint: "Static means it takes a snapshot at the moment of querying.",
+                tags: ["DOM", "NodeList", "Week 7.1"]
+            },
+            {
+                questionNumber: 8,
+                question: "Which property holds the page title string?",
+                answerOptions: [
+                    { text: "document.title", isCorrect: true, rationale: "document.title holds and allows setting the page title." },
+                    { text: "document.headerTitle", isCorrect: false, rationale: "headerTitle is not a standard DOM property." },
+                    { text: "document.pageTitle", isCorrect: false, rationale: "pageTitle is not standard." },
+                    { text: "document.head.title", isCorrect: false, rationale: "document.title is accessed directly on the document object." }
+                ],
+                hint: "Accessed directly on the document object.",
+                tags: ["DOM", "Week 7.1"]
+            },
+            {
+                questionNumber: 9,
+                question: "What relationship describes a node directly contained by a parent?",
+                answerOptions: [
+                    { text: "Child", isCorrect: true, rationale: "A child node is directly contained by a parent node." },
+                    { text: "Sibling", isCorrect: false, rationale: "Siblings share the same parent." },
+                    { text: "Descendant", isCorrect: false, rationale: "Descendants can be at any depth, not necessarily direct." },
+                    { text: "Ancestor", isCorrect: false, rationale: "Ancestors contain the node above." }
+                ],
+                hint: "Direct containment by a parent.",
+                tags: ["DOM", "Relationships", "Week 7.1"]
+            },
+            {
+                questionNumber: 10,
+                question: "If selection returns `null`, what is the best initial troubleshooting step?",
+                answerOptions: [
+                    { text: "Verify the selector and whether the HTML has been parsed", isCorrect: true, rationale: "Ensure the selector string is correct and that the script runs after the relevant HTML is parsed." },
+                    { text: "Restart the computer operating system", isCorrect: false, rationale: "System restart is unnecessary; selector timing or syntax is the cause." },
+                    { text: "Reinstall the web browser", isCorrect: false, rationale: "Browser reinstallation won't fix missing DOM nodes or premature script execution." },
+                    { text: "Use `eval()` on the entire document", isCorrect: false, rationale: "eval is dangerous and unhelpful for query debugging." }
+                ],
+                hint: "Check if the element exists yet in the parsing timeline.",
+                tags: ["DOM", "Debugging", "Week 7.1"]
+            },
+
+            // Week 7.2: DOM Manipulation and Traversal (Items 11 - 20)
+            {
+                questionNumber: 11,
+                question: "How does `textContent` handle HTML markup passed into it?",
+                answerOptions: [
+                    { text: "Markup is displayed literally as plain text", isCorrect: true, rationale: "textContent reads or replaces plain text; markup tags are displayed literally rather than parsed." },
+                    { text: "Markup is parsed and rendered as HTML elements", isCorrect: false, rationale: "innerHTML parses markup; textContent treats everything as literal text." },
+                    { text: "It throws a SyntaxError when tags are detected", isCorrect: false, rationale: "It safely treats tags as plain text strings." },
+                    { text: "It strips all characters and leaves whitespace", isCorrect: false, rationale: "It preserves the text content literally." }
+                ],
+                hint: "It treats tags as ordinary characters.",
+                tags: ["DOM", "Manipulation", "Week 7.2"]
+            },
+            {
+                questionNumber: 12,
+                question: "When should you use `innerHTML`?",
+                answerOptions: [
+                    { text: "Only with trusted markup", isCorrect: true, rationale: "innerHTML parses HTML and should be used exclusively with trusted markup to prevent XSS vulnerabilities." },
+                    { text: "Whenever accepting raw user input from forms", isCorrect: false, rationale: "Using innerHTML with raw user input opens security vulnerabilities like XSS." },
+                    { text: "To read and replace plain text exclusively", isCorrect: false, rationale: "textContent is preferred for plain text." },
+                    { text: "To manipulate inline CSS property values", isCorrect: false, rationale: "style property is used for CSS." }
+                ],
+                hint: "Security is crucial when parsing HTML strings.",
+                tags: ["DOM", "Security", "Week 7.2"]
+            },
+            {
+                questionNumber: 13,
+                question: "How do you change inline CSS using JavaScript property names?",
+                answerOptions: [
+                    { text: "Using camelCase property names on `style` (e.g. `style.backgroundColor`)", isCorrect: true, rationale: "Inline styles use camelCase property names such as style.backgroundColor." },
+                    { text: "Using kebab-case property names with hyphens", isCorrect: false, rationale: "Kebab-case like background-color requires bracket notation or camelCase." },
+                    { text: "Using snake_case property names with underscores", isCorrect: false, rationale: "snake_case is not standard for DOM inline styles." },
+                    { text: "By modifying `className` directly", isCorrect: false, rationale: "className changes classes, not specific inline styles." }
+                ],
+                hint: "CSS properties with hyphens become camelCased in JS.",
+                tags: ["DOM", "CSS", "Week 7.2"]
+            },
+            {
+                questionNumber: 14,
+                question: "What does `document.createElement(\"li\")` accomplish?",
+                answerOptions: [
+                    { text: "Creates an element in memory ready to be inserted", isCorrect: true, rationale: "createElement generates an element in memory; it must be appended or inserted into the DOM to display." },
+                    { text: "Instantly appends an `<li>` to the document body", isCorrect: false, rationale: "It only creates it in memory; insertion requires append or prepend." },
+                    { text: "Selects an existing `<li>` from the page", isCorrect: false, rationale: "querySelector selects existing elements; createElement creates new ones." },
+                    { text: "Deletes all `<li>` elements from memory", isCorrect: false, rationale: "It creates, not deletes." }
+                ],
+                hint: "It builds the node in memory before displaying it.",
+                tags: ["DOM", "Creation", "Week 7.2"]
+            },
+            {
+                questionNumber: 15,
+                question: "What happens when you append an existing DOM node to a new parent container?",
+                answerOptions: [
+                    { text: "It moves the existing node to the new location", isCorrect: true, rationale: "Appending an existing node moves it from its current position; it does not create a copy." },
+                    { text: "It creates an exact clone at the new location", isCorrect: false, rationale: "Cloning requires cloneNode(); appending moves the original node." },
+                    { text: "It throws a DOMException due to duplication", isCorrect: false, rationale: "Nodes can be moved freely without throwing exceptions." },
+                    { text: "It deletes the node entirely from the document", isCorrect: false, rationale: "It relocates the node." }
+                ],
+                hint: "Nodes can only exist in one place in the tree at a time.",
+                tags: ["DOM", "Node Movement", "Week 7.2"]
+            },
+            {
+                questionNumber: 16,
+                question: "Which property accesses direct child elements while excluding text nodes?",
+                answerOptions: [
+                    { text: "list.children", isCorrect: true, rationale: "list.children returns direct child elements, excluding pure text/whitespace nodes." },
+                    { text: "list.childNodes", isCorrect: false, rationale: "childNodes includes all child nodes including text and comment nodes." },
+                    { text: "list.textContent", isCorrect: false, rationale: "textContent retrieves text." },
+                    { text: "list.innerHTML", isCorrect: false, rationale: "innerHTML retrieves markup string." }
+                ],
+                hint: "Elements only, ignoring text node clutter.",
+                tags: ["DOM", "Traversal", "Week 7.2"]
+            },
+            {
+                questionNumber: 17,
+                question: "What does `item.closest(\"ul\")` return?",
+                answerOptions: [
+                    { text: "The element itself or nearest matching ancestor", isCorrect: true, rationale: "closest() checks the element itself and traverses upward through ancestors until it finds a match." },
+                    { text: "The immediate child element matching `ul`", isCorrect: false, rationale: "closest searches upward toward ancestors, not downward toward children." },
+                    { text: "All sibling elements matching `ul`", isCorrect: false, rationale: "It searches ancestors, not siblings." },
+                    { text: "Null if the element itself is not a `ul`", isCorrect: false, rationale: "It returns the element itself if it matches, even if it is not an ancestor." }
+                ],
+                hint: "It searches upward for the nearest matching ancestor or self.",
+                tags: ["DOM", "Traversal", "Week 7.2"]
+            },
+            {
+                questionNumber: 18,
+                question: "How do you access data attributes like `data-code` in JavaScript?",
+                answerOptions: [
+                    { text: "Using `element.dataset.code`", isCorrect: true, rationale: "dataset provides convenient access to custom data-* attributes." },
+                    { text: "Using `element.getAttribute(\"code\")`", isCorrect: false, rationale: "getAttribute would require `data-code`, whereas dataset uses camelCase property names." },
+                    { text: "Using `element.data(\"code\")`", isCorrect: false, rationale: "element.data is a jQuery method, not native DOM dataset." },
+                    { text: "Using `element.attributes.code`", isCorrect: false, rationale: "attributes returns a NamedNodeMap, dataset is the standard DOM API." }
+                ],
+                hint: "The dataset property maps data-* attributes.",
+                tags: ["DOM", "Attributes", "Week 7.2"]
+            },
+            {
+                questionNumber: 19,
+                question: "Where should you insert user input text to prevent security risks?",
+                answerOptions: [
+                    { text: "textContent", isCorrect: true, rationale: "Use textContent for user input and API text so the browser does not interpret data as HTML." },
+                    { text: "innerHTML", isCorrect: false, rationale: "innerHTML allows script injection if user input is unescaped." },
+                    { text: "outerHTML", isCorrect: false, rationale: "outerHTML parses markup and poses similar risks to innerHTML." },
+                    { text: "document.write()", isCorrect: false, rationale: "document.write is obsolete and risky." }
+                ],
+                hint: "Always treat raw user input as plain text.",
+                tags: ["DOM", "Security", "Week 7.2"]
+            },
+            {
+                questionNumber: 20,
+                question: "What should you verify before calling methods on traversal properties like `previousElementSibling`?",
+                answerOptions: [
+                    { text: "Verify that a result exists (not null)", isCorrect: true, rationale: "Sibling and ancestor searches may return null; verify results exist before calling methods on them." },
+                    { text: "Verify that the browser window is focused", isCorrect: false, rationale: "Focus is unrelated to traversal null checks." },
+                    { text: "Verify that CSS styles are fully loaded", isCorrect: false, rationale: "CSS loading doesn't affect DOM node traversal references." },
+                    { text: "Verify that the parent node is a `<div>`", isCorrect: false, rationale: "Parents can be any valid container element." }
+                ],
+                hint: "The adjacent element might not exist.",
+                tags: ["DOM", "Traversal", "Week 7.2"]
+            },
+
+            // Week 8: Event Handling (Items 21 - 30)
+            {
+                questionNumber: 21,
+                question: "What does an event report in JavaScript?",
+                answerOptions: [
+                    { text: "An action that occurred in the browser", isCorrect: true, rationale: "An event reports an action (like a click, load, or keypress). The target is where the action began." },
+                    { text: "A fatal script compilation error", isCorrect: false, rationale: "Errors are handled via try...catch or error events, not general user events." },
+                    { text: "A server-side database timeout", isCorrect: false, rationale: "Events occur in the browser context." },
+                    { text: "A CSS stylesheet loading status", isCorrect: false, rationale: "Events span user interaction, window state, and document lifecycle." }
+                ],
+                hint: "User actions or browser changes trigger these.",
+                tags: ["Events", "Week 8"]
+            },
+            {
+                questionNumber: 22,
+                question: "How should you pass a handler function to `addEventListener`?",
+                answerOptions: [
+                    { text: "Pass the function reference (e.g., `handleSave`)", isCorrect: true, rationale: "Pass handleSave rather than handleSave() so it executes when the event fires, not during registration." },
+                    { text: "Pass the function call with parentheses (e.g., `handleSave()`)", isCorrect: false, rationale: "Adding parentheses executes the function immediately during registration." },
+                    { text: "Pass the function name as a quoted string (e.g., `\"handleSave\"`)", isCorrect: false, rationale: "Strings are not valid listener references in addEventListener." },
+                    { text: "Pass an integer ID reference", isCorrect: false, rationale: "Listeners require function references." }
+                ],
+                hint: "Do not invoke the function immediately during registration.",
+                tags: ["Events", "Handlers", "Week 8"]
+            },
+            {
+                questionNumber: 23,
+                question: "Which event fires during live text editing in an input field?",
+                answerOptions: [
+                    { text: "input", isCorrect: true, rationale: "input event fires for live editing and real-time previews." },
+                    { text: "change", isCorrect: false, rationale: "change fires when value selection is committed (e.g., on blur or enter)." },
+                    { text: "submit", isCorrect: false, rationale: "submit fires on form submission." },
+                    { text: "blur", isCorrect: false, rationale: "blur fires when focus is lost." }
+                ],
+                hint: "Used for live counters and real-time previews.",
+                tags: ["Events", "Inputs", "Week 8"]
+            },
+            {
+                questionNumber: 24,
+                question: "When does the `change` event fire for form controls?",
+                answerOptions: [
+                    { text: "When value or selection is committed", isCorrect: true, rationale: "change suits committed selections, whereas input suits live continuous editing." },
+                    { text: "On every single keystroke instantly", isCorrect: false, rationale: "Keystrokes trigger input events." },
+                    { text: "When the mouse pointer enters the element", isCorrect: false, rationale: "Pointerenter handles mouse hovering." },
+                    { text: "When the page finishes parsing HTML", isCorrect: false, rationale: "DOMContentLoaded handles HTML parsing." }
+                ],
+                hint: "Fires when input is finished or committed.",
+                tags: ["Events", "Inputs", "Week 8"]
+            },
+            {
+                questionNumber: 25,
+                question: "What does `event.target` represent?",
+                answerOptions: [
+                    { text: "The original source where the event began", isCorrect: true, rationale: "event.target is the original source, whereas event.currentTarget is the element owning the running listener." },
+                    { text: "The element owning the currently running listener", isCorrect: false, rationale: "That is event.currentTarget." },
+                    { text: "The parent window object", isCorrect: false, rationale: "Window is the global object, not event.target." },
+                    { text: "The CSS stylesheet target", isCorrect: false, rationale: "event.target relates to DOM element event dispatch." }
+                ],
+                hint: "Where the event originated.",
+                tags: ["Events", "Properties", "Week 8"]
+            },
+            {
+                questionNumber: 26,
+                question: "What does `event.currentTarget` represent?",
+                answerOptions: [
+                    { text: "The element owning the running listener", isCorrect: true, rationale: "currentTarget changes according to the listener currently running during propagation." },
+                    { text: "The original source where the click started", isCorrect: false, rationale: "That is event.target." },
+                    { text: "The topmost document root", isCorrect: false, rationale: "currentTarget is the element with the active listener." },
+                    { text: "The timer callback reference", isCorrect: false, rationale: "Unrelated to timers." }
+                ],
+                hint: "The element where the listener is currently attached and executing.",
+                tags: ["Events", "Properties", "Week 8"]
+            },
+            {
+                questionNumber: 27,
+                question: "Which event signifies that HTML has been fully parsed?",
+                answerOptions: [
+                    { text: "DOMContentLoaded", isCorrect: true, rationale: "DOMContentLoaded fires when HTML is fully parsed, whereas load waits for dependent resources like stylesheets and images." },
+                    { text: "load", isCorrect: false, rationale: "load waits for page and all dependent resources." },
+                    { text: "ready", isCorrect: false, rationale: "ready is jQuery terminology, not native DOM event." },
+                    { text: "parseComplete", isCorrect: false, rationale: "parseComplete is not a standard DOM event." }
+                ],
+                hint: "Fires when the document structure is parsed.",
+                tags: ["Events", "Lifecycle", "Week 8"]
+            },
+            {
+                questionNumber: 28,
+                question: "Where should form submission logic be attached?",
+                answerOptions: [
+                    { text: "To the form `submit` event", isCorrect: true, rationale: "Attach submission logic to the form submit event so keyboard submission uses the same logic as button clicks." },
+                    { text: "To the submit button `click` event only", isCorrect: false, rationale: "Attaching only to button click misses keyboard form submissions (e.g., pressing Enter)." },
+                    { text: "To the window `load` event", isCorrect: false, rationale: "Window load fires too early for submissions." },
+                    { text: "To the input `focus` event", isCorrect: false, rationale: "Input focus is for typing." }
+                ],
+                hint: "Ensures both button clicks and Enter key submissions work.",
+                tags: ["Events", "Forms", "Week 8"]
+            },
+            {
+                questionNumber: 29,
+                question: "How should essential interactive actions be designed for accessibility?",
+                answerOptions: [
+                    { text: "They should work with a keyboard and not depend solely on hovering", isCorrect: true, rationale: "Essential actions must work with keyboards and not rely exclusively on mouse hovering." },
+                    { text: "They should require double-clicking for security", isCorrect: false, rationale: "Double clicking is poor for accessibility." },
+                    { text: "They should only function via touch gestures", isCorrect: false, rationale: "Must support keyboard navigation." },
+                    { text: "They should disable focus outlines", isCorrect: false, rationale: "Focus outlines are essential for keyboard accessibility." }
+                ],
+                hint: "Think about users who cannot use a mouse.",
+                tags: ["Events", "Accessibility", "Week 8"]
+            },
+            {
+                questionNumber: 30,
+                question: "Which property describes key details during a keyboard `keydown` event?",
+                answerOptions: [
+                    { text: "event.key", isCorrect: true, rationale: "event.key describes the key pressed, while ctrlKey and shiftKey check modifier keys." },
+                    { text: "event.mouseKey", isCorrect: false, rationale: "Keyboard events use event.key." },
+                    { text: "event.targetValue", isCorrect: false, rationale: "TargetValue is for inputs." },
+                    { text: "event.buttonCode", isCorrect: false, rationale: "ButtonCode is for mouse events." }
+                ],
+                hint: "Indicates the exact character or key pressed.",
+                tags: ["Events", "Keyboard", "Week 8"]
+            },
+
+            // Week 8: Propagation and Custom Events (Items 31 - 40)
+            {
+                questionNumber: 31,
+                question: "What is the correct order of event propagation phases?",
+                answerOptions: [
+                    { text: "Capturing, Target, Bubbling", isCorrect: true, rationale: "Propagating events pass through capturing (outer to target), the target, and bubbling (outward from target)." },
+                    { text: "Bubbling, Target, Capturing", isCorrect: false, rationale: "Capturing travels inward first before bubbling outward." },
+                    { text: "Target, Capturing, Bubbling", isCorrect: false, rationale: "Capturing always precedes target arrival." },
+                    { text: "Capturing, Bubbling, Target", isCorrect: false, rationale: "Target phase occurs between capturing and bubbling." }
+                ],
+                hint: "Travels down from ancestors, hits target, then bubbles back up.",
+                tags: ["Propagation", "Week 8"]
+            },
+            {
+                questionNumber: 32,
+                question: "Which phase travels from outer ancestors toward the target?",
+                answerOptions: [
+                    { text: "Capturing", isCorrect: true, rationale: "Capturing travels from outer ancestors toward the target." },
+                    { text: "Bubbling", isCorrect: false, rationale: "Bubbling travels outward from the target to outer ancestors." },
+                    { text: "Target phase", isCorrect: false, rationale: "Target phase happens at the element itself." },
+                    { text: "Default phase", isCorrect: false, rationale: "Not a standard propagation phase name." }
+                ],
+                hint: "Captures down from the root.",
+                tags: ["Propagation", "Week 8"]
+            },
+            {
+                questionNumber: 33,
+                question: "What does `event.preventDefault()` do?",
+                answerOptions: [
+                    { text: "Cancels a cancelable default action such as normal form navigation", isCorrect: true, rationale: "preventDefault cancels default browser behaviors like form submission navigation or link clicks." },
+                    { text: "Stops the event from continuing to other nodes on its path", isCorrect: false, rationale: "That is stopPropagation()." },
+                    { text: "Removes the event listener from memory", isCorrect: false, rationale: "That requires removeEventListener." },
+                    { text: "Stops later listeners on the same node", isCorrect: false, rationale: "That is stopImmediatePropagation()." }
+                ],
+                hint: "Prevents default browser navigation or behavior.",
+                tags: ["Propagation", "Methods", "Week 8"]
+            },
+            {
+                questionNumber: 34,
+                question: "What does `{ once: true }` option do in `addEventListener`?",
+                answerOptions: [
+                    { text: "Removes the listener automatically after its first call", isCorrect: true, rationale: "{once: true} automatically removes the listener after it fires once." },
+                    { text: "Ensures the event only fires once per session", isCorrect: false, rationale: "It removes the listener after the first trigger." },
+                    { text: "Prevents event bubbling", isCorrect: false, rationale: "Bubbling control requires stopPropagation." },
+                    { text: "Runs the listener during capturing phase only", isCorrect: false, rationale: "Capturing requires {capture: true}." }
+                ],
+                hint: "Executes once and then self-destructs.",
+                tags: ["Propagation", "Options", "Week 8"]
+            },
+            {
+                questionNumber: 35,
+                question: "What is event delegation?",
+                answerOptions: [
+                    { text: "Using one stable ancestor listener to handle many descendants, including dynamically created items", isCorrect: true, rationale: "Event delegation leverages bubbling so a single parent listener manages events for multiple current and future descendants." },
+                    { text: "Delegating events directly to the server via AJAX", isCorrect: false, rationale: "Delegation is a DOM event bubbling pattern." },
+                    { text: "Attaching individual listeners to every single child element", isCorrect: false, rationale: "That is direct binding, the opposite of delegation." },
+                    { text: "Canceling events at the document root", isCorrect: false, rationale: "That is event cancellation." }
+                ],
+                hint: "One parent listener handles all child events via bubbling.",
+                tags: ["Propagation", "Delegation", "Week 8"]
+            },
+            {
+                questionNumber: 36,
+                question: "How do you enable capturing phase registration in `addEventListener`?",
+                answerOptions: [
+                    { text: "Pass `{ capture: true }` as the options argument", isCorrect: true, rationale: "{capture: true} registers the listener for the capturing phase." },
+                    { text: "Set `event.capture = true` inside the handler", isCorrect: false, rationale: "Capture must be set during registration options." },
+                    { text: "Pass `true` as a third parameter or options object", isCorrect: true, rationale: "Passing { capture: true } is the modern standard options object." },
+                    { text: "Prefix the event type with `capture:`", isCorrect: false, rationale: "Event type remains unchanged." }
+                ],
+                hint: "Passed in the options object during listener attachment.",
+                tags: ["Propagation", "Week 8"]
+            },
+            {
+                questionNumber: 37,
+                question: "What does `removeEventListener` require to successfully remove a listener?",
+                answerOptions: [
+                    { text: "The same target, type, handler reference, and capture setting", isCorrect: true, rationale: "Removal requires exact matching target, type, handler reference, and capture configuration." },
+                    { text: "Only the event type string", isCorrect: false, rationale: "Without handler reference and target, removal fails." },
+                    { text: "Only the handler function name", isCorrect: false, rationale: "Target and event type are also required." },
+                    { text: "A global destroy method call", isCorrect: false, rationale: "removeEventListener must be explicitly called with matching parameters." }
+                ],
+                hint: "Every parameter must match what was used to add it.",
+                tags: ["Propagation", "Week 8"]
+            },
+            {
+                questionNumber: 38,
+                question: "How do you pass application data in a custom event?",
+                answerOptions: [
+                    { text: "Using the `detail` property (e.g., `new CustomEvent(\"type\", { detail: { ... } })`)", isCorrect: true, rationale: "detail carries custom application data payload in CustomEvent instances." },
+                    { text: "Using the `payload` property", isCorrect: false, rationale: "CustomEvent standard property is detail." },
+                    { text: "Using query parameters in the event name string", isCorrect: false, rationale: "Data belongs in detail." },
+                    { text: "Using global window variables", isCorrect: false, rationale: "CustomEvent detail is the designed encapsulation mechanism." }
+                ],
+                hint: "The property name inside the configuration object is `detail`.",
+                tags: ["Custom Events", "Week 8"]
+            },
+            {
+                questionNumber: 39,
+                question: "What option allows a custom event to bubble up to ancestor listeners?",
+                answerOptions: [
+                    { text: "`bubbles: true`", isCorrect: true, rationale: "bubbles: true allows ancestor listeners to receive dispatched custom events." },
+                    { text: "`propagation: true`", isCorrect: false, rationale: "The property name is bubbles." },
+                    { text: "`allowBubbles: true`", isCorrect: false, rationale: "Not standard." },
+                    { text: "`cancelable: true`", isCorrect: false, rationale: "Cancelable controls whether preventDefault works." }
+                ],
+                hint: "Boolean property in the CustomEvent init object.",
+                tags: ["Custom Events", "Week 8"]
+            },
+            {
+                questionNumber: 40,
+                question: "What method is called to trigger and dispatch a custom event?",
+                answerOptions: [
+                    { text: "element.dispatchEvent(event)", isCorrect: true, rationale: "dispatchEvent sends the custom event through the DOM tree." },
+                    { text: "element.trigger(event)", isCorrect: false, rationale: "trigger is a jQuery method, not native DOM." },
+                    { text: "element.fireEvent(event)", isCorrect: false, rationale: "fireEvent is obsolete IE syntax." },
+                    { text: "element.emit(event)", isCorrect: false, rationale: "emit is used in Node.js EventEmitters, not DOM elements." }
+                ],
+                hint: "Dispatches the event object on the element.",
+                tags: ["Custom Events", "Week 8"]
+            },
+
+            // Week 9: Form Controls and Values (Items 41 - 50)
+            {
+                questionNumber: 41,
+                question: "What attribute associates a `<label>` with an `<input>`?",
+                answerOptions: [
+                    { text: "`for` matching the input's `id`", isCorrect: true, rationale: "Matching label for and input id associates them for accessibility and usability." },
+                    { text: "`name` matching the input's `name`", isCorrect: false, rationale: "Name is for form submission keys." },
+                    { text: "`target` matching input class", isCorrect: false, rationale: "Target is not used for labels." },
+                    { text: "`aria-input`", isCorrect: false, rationale: "Label association uses `for` and `id`." }
+                ],
+                hint: "The label's `for` attribute corresponds to the input's `id`.",
+                tags: ["Forms", "Week 9"]
+            },
+            {
+                questionNumber: 42,
+                question: "Can a placeholder serve as the only form label?",
+                answerOptions: [
+                    { text: "No, placeholders disappear on typing and fail accessibility standards", isCorrect: true, rationale: "Placeholders should not serve as the only label because they vanish upon user entry and present accessibility barriers." },
+                    { text: "Yes, placeholders are fully accessible labels", isCorrect: false, rationale: "Placeholders are hints, not permanent labels." },
+                    { text: "Yes, provided the input has a `required` attribute", isCorrect: false, rationale: "Required does not replace a label." },
+                    { text: "Only in password and email input fields", isCorrect: false, rationale: "Placeholders are never sufficient as sole labels." }
+                ],
+                hint: "Think about accessibility and what happens when text is typed.",
+                tags: ["Forms", "Accessibility", "Week 9"]
+            },
+            {
+                questionNumber: 43,
+                question: "What property holds the boolean selection state for radio buttons and checkboxes?",
+                answerOptions: [
+                    { text: ".checked", isCorrect: true, rationale: ".checked holds the boolean selection state for radios and checkboxes." },
+                    { text: ".selected", isCorrect: false, rationale: ".selected is used for select options." },
+                    { text: ".value", isCorrect: false, rationale: ".value holds the submitted string value." },
+                    { text: ".active", isCorrect: false, rationale: ".active is a CSS pseudo-class state." }
+                ],
+                hint: "True or false property indicating if it is ticked.",
+                tags: ["Forms", "Inputs", "Week 9"]
+            },
+            {
+                questionNumber: 44,
+                question: "How do you read repeated entries with the same name from a `FormData` object?",
+                answerOptions: [
+                    { text: "Using `data.getAll(\"name\")`", isCorrect: true, rationale: "getAll reads repeated entries with the same name (like checkboxes sharing a name)." },
+                    { text: "Using `data.get(\"name\")`", isCorrect: false, rationale: "get only reads the first entry when multiple exist." },
+                    { text: "Using `data.repeat(\"name\")`", isCorrect: false, rationale: "repeat is not a FormData method." },
+                    { text: "Using `data.values()`", isCorrect: false, rationale: "values iterates all entries without filtering by name." }
+                ],
+                hint: "Gets *all* values sharing a specific name.",
+                tags: ["Forms", "FormData", "Week 9"]
+            },
+            {
+                questionNumber: 45,
+                question: "What does `Number(\"\")` evaluate to in JavaScript?",
+                answerOptions: [
+                    { text: "0", isCorrect: true, rationale: "Number(\"\") evaluates to 0, which is why empty form entries must be checked separately from valid numeric 0." },
+                    { text: "NaN", isCorrect: false, rationale: "Unlike parseInt(\"\"), Number(\"\") surprisingly evaluates to 0." },
+                    { text: "Null", isCorrect: false, rationale: "It evaluates to number 0." },
+                    { text: "Undefined", isCorrect: false, rationale: "It evaluates to number 0." }
+                ],
+                hint: "Empty string conversion to number yields zero, requiring careful validation checks.",
+                tags: ["Forms", "Validation", "Week 9"]
+            },
+            {
+                questionNumber: 46,
+                question: "What method removes surrounding whitespace from a string value?",
+                answerOptions: [
+                    { text: "`trim()`", isCorrect: true, rationale: "trim removes surrounding whitespace before comparing or displaying input." },
+                    { text: "`strip()`", isCorrect: false, rationale: "strip is Python; JavaScript uses trim." },
+                    { text: "`clean()`", isCorrect: false, rationale: "clean is not a standard string method." },
+                    { text: "`cutSpaces()`", isCorrect: false, rationale: "Not standard JavaScript." }
+                ],
+                hint: "Trims leading and trailing spaces.",
+                tags: ["Forms", "Strings", "Week 9"]
+            },
+            {
+                questionNumber: 47,
+                question: "What happens to disabled and unchecked choice controls in `FormData`?",
+                answerOptions: [
+                    { text: "They are normally omitted from FormData", isCorrect: true, rationale: "Disabled and unchecked choice controls are normally omitted from FormData." },
+                    { text: "They are included with empty string values", isCorrect: false, rationale: "They are omitted entirely." },
+                    { text: "They throw a validation error during FormData creation", isCorrect: false, rationale: "FormData ignores them silently." },
+                    { text: "They default to boolean true", isCorrect: false, rationale: "FormData omits them." }
+                ],
+                hint: "Unchecked or disabled controls do not submit data.",
+                tags: ["Forms", "FormData", "Week 9"]
+            },
+            {
+                questionNumber: 48,
+                question: "How do you check if a converted number is finite and valid?",
+                answerOptions: [
+                    { text: "`Number.isFinite(value)`", isCorrect: true, rationale: "Number.isFinite checks if a converted number is a finite number." },
+                    { text: "`Number.isNumber(value)`", isCorrect: false, rationale: "Method is isFinite or isNaN." },
+                    { text: "`Number.isValid(value)`", isCorrect: false, rationale: "Not a standard method." },
+                    { text: "`isFiniteNumber(value)`", isCorrect: false, rationale: "Standard static method is Number.isFinite." }
+                ],
+                hint: "Static method on the Number object.",
+                tags: ["Forms", "Validation", "Week 9"]
+            },
+            {
+                questionNumber: 49,
+                question: "What does an enabled field *without* a name attribute do during form submission or FormData creation?",
+                answerOptions: [
+                    { text: "It is normally absent from FormData", isCorrect: true, rationale: "An enabled field without a name is absent from FormData because name supplies the submitted key." },
+                    { text: "It submits with key 'undefined'", isCorrect: false, rationale: "Name is required to supply the key." },
+                    { text: "It throws a form submission exception", isCorrect: false, rationale: "It is simply ignored by FormData." },
+                    { text: "It submits using its id as the key", isCorrect: false, rationale: "FormData relies on the name attribute, not id." }
+                ],
+                hint: "The `name` attribute provides the key for submitted data.",
+                tags: ["Forms", "FormData", "Week 9"]
+            },
+            {
+                questionNumber: 50,
+                question: "Which control type enables selecting multiple choices from a list?",
+                answerOptions: [
+                    { text: "`<select multiple>` or checkboxes", isCorrect: true, rationale: "Select with multiple attribute or independent checkboxes enable several choices." },
+                    { text: "Radio buttons sharing the same name", isCorrect: false, rationale: "Radio buttons allow only one choice from controls sharing the same name." },
+                    { text: "Standard single select dropdown", isCorrect: false, rationale: "Single select allows only one choice." },
+                    { text: "Password input", isCorrect: false, rationale: "Password is for short secret text." }
+                ],
+                hint: "Allows more than one option to be selected simultaneously.",
+                tags: ["Forms", "Controls", "Week 9"]
+            },
+
+            // Week 9: Validation and Submission (Items 51 - 60)
+            {
+                questionNumber: 51,
+                question: "What does `form.checkValidity()` return?",
+                answerOptions: [
+                    { text: "Return validity as `true` or `false`", isCorrect: true, rationale: "checkValidity returns true or false based on form validation constraints." },
+                    { text: "Displays browser validation popups", isCorrect: false, rationale: "reportValidity checks validity and displays browser feedback; checkValidity only returns boolean." },
+                    { text: "Resets the form fields", isCorrect: false, rationale: "form.reset() resets fields." },
+                    { text: "Submits the form automatically", isCorrect: false, rationale: "form.submit() submits the form." }
+                ],
+                hint: "Returns a boolean value indicating if constraints pass.",
+                tags: ["Validation", "Week 9"]
+            },
+            {
+                questionNumber: 52,
+                question: "What does `form.reportValidity()` do?",
+                answerOptions: [
+                    { text: "Check validity and display browser feedback", isCorrect: true, rationale: "reportValidity checks constraints and displays built-in browser feedback messages." },
+                    { text: "Sends validation results to the server via API", isCorrect: false, rationale: "It operates entirely on the client side." },
+                    { text: "Returns an array of error strings", isCorrect: false, rationale: "It returns a boolean and triggers browser error tooltips." },
+                    { text: "Clears all custom error messages", isCorrect: false, rationale: "setCustomValidity(\"\") clears custom errors." }
+                ],
+                hint: "Triggers browser UI error popups if invalid.",
+                tags: ["Validation", "Week 9"]
+            },
+            {
+                questionNumber: 53,
+                question: "How do you clear a custom validity error message?",
+                answerOptions: [
+                    { text: "Pass an empty string `\"\"` to `setCustomValidity(\"\")`", isCorrect: true, rationale: "Use setCustomValidity with an empty string to clear a custom error." },
+                    { text: "Pass `null` to `setCustomValidity(null)`", isCorrect: false, rationale: "It expects an empty string to clear." },
+                    { text: "Call `clearCustomValidity()`", isCorrect: false, rationale: "That method does not exist." },
+                    { text: "Remove the validity attribute", isCorrect: false, rationale: "Custom validity is controlled via setCustomValidity method." }
+                ],
+                hint: "An empty string signals that the field is now valid.",
+                tags: ["Validation", "Week 9"]
+            },
+            {
+                questionNumber: 54,
+                question: "What does the `novalidate` attribute on a `<form>` do?",
+                answerOptions: [
+                    { text: "Skips automatic submit validation while keeping validity APIs usable", isCorrect: true, rationale: "novalidate skips automatic browser submit validation so custom JS validation interfaces can run." },
+                    { text: "Disables all JavaScript in form controls", isCorrect: false, rationale: "It only affects native browser submit validation behavior." },
+                    { text: "Permanently deletes form validation rules", isCorrect: false, rationale: "Validity APIs remain fully usable in JS." },
+                    { text: "Prevents form submission entirely", isCorrect: false, rationale: "Form can still be submitted via JavaScript." }
+                ],
+                hint: "Disables native browser popup validation on submit.",
+                tags: ["Validation", "Week 9"]
+            },
+            {
+                questionNumber: 55,
+                question: "What ARIA attribute communicates form field error state to screen readers?",
+                answerOptions: [
+                    { text: "`aria-invalid`", isCorrect: true, rationale: "aria-invalid communicates the field error state, while aria-describedby connects a field to its error message." },
+                    { text: "`aria-error`", isCorrect: false, rationale: "Standard attribute is aria-invalid." },
+                    { text: "`aria-failed`", isCorrect: false, rationale: "Not standard." },
+                    { text: "`aria-status`", isCorrect: false, rationale: "aria-status is for live status regions." }
+                ],
+                hint: "Indicates whether the field value has validation errors.",
+                tags: ["Validation", "Accessibility", "Week 9"]
+            },
+            {
+                questionNumber: 56,
+                question: "What ARIA attribute connects a form field to its error message element?",
+                answerOptions: [
+                    { text: "`aria-describedby`", isCorrect: true, rationale: "aria-describedby connects a field to its explanatory error message element." },
+                    { text: "`aria-connectedto`", isCorrect: false, rationale: "Not standard." },
+                    { text: "`aria-message`", isCorrect: false, rationale: "Not standard." },
+                    { text: "`aria-label`", isCorrect: false, rationale: "aria-label provides a text label." }
+                ],
+                hint: "Links an input to its description or error element ID.",
+                tags: ["Validation", "Accessibility", "Week 9"]
+            },
+            {
+                questionNumber: 57,
+                question: "When should form entries be reset after submission?",
+                answerOptions: [
+                    { text: "Only after successful processing when clearing supports the task", isCorrect: true, rationale: "Preserve entries after a failed save; reset only after successful processing." },
+                    { text: "Immediately on submit click regardless of validity", isCorrect: false, rationale: "If validation fails, entries must be preserved." },
+                    { text: "Never under any circumstances", isCorrect: false, rationale: "Resetting after successful saves is standard practice." },
+                    { text: "Before validation checks run", isCorrect: false, rationale: "Would wipe out input before validation." }
+                ],
+                hint: "Don't clear user work if saving fails.",
+                tags: ["Validation", "Forms", "Week 9"]
+            },
+            {
+                questionNumber: 58,
+                question: "What action helps prevent duplicate submissions during a pending request?",
+                answerOptions: [
+                    { text: "Disable the submission control during a pending request", isCorrect: true, rationale: "Disable submit buttons during pending requests to prevent duplicate user actions." },
+                    { text: "Reload the web page instantly", isCorrect: false, rationale: "Reloading aborts the pending request." },
+                    { text: "Hide the entire form element", isCorrect: false, rationale: "Disabling controls is better UX than hiding." },
+                    { text: "Clear all form inputs immediately", isCorrect: false, rationale: "Clearing inputs prematurely loses data." }
+                ],
+                hint: "Stop the user from clicking submit twice.",
+                tags: ["Validation", "UX", "Week 9"]
+            },
+            {
+                questionNumber: 59,
+                question: "Besides client-side validation, where else must data be validated?",
+                answerOptions: [
+                    { text: "On the server", isCorrect: true, rationale: "Client-side validation improves usability, but the server must also validate data for security and integrity." },
+                    { text: "In browser local storage", isCorrect: false, rationale: "Local storage is client-side." },
+                    { text: "Inside CSS stylesheets", isCorrect: false, rationale: "CSS styles presentation, not data validity." },
+                    { text: "Nowhere else; client-side is sufficient", isCorrect: false, rationale: "Client-side validation can be bypassed easily." }
+                ],
+                hint: "Never trust client-side input alone.",
+                tags: ["Validation", "Security", "Week 9"]
+            },
+            {
+                questionNumber: 60,
+                question: "What should happen to focus after form submission validation fails?",
+                answerOptions: [
+                    { text: "Focus the first invalid field when appropriate", isCorrect: true, rationale: "Focusing the first invalid field improves accessibility and user experience." },
+                    { text: "Focus the window body", isCorrect: false, rationale: "Focusing body loses context." },
+                    { text: "Remove focus from all elements", isCorrect: false, rationale: "Keyboard focus should guide the user to the error." },
+                    { text: "Redirect to the home page", isCorrect: false, rationale: "Redirecting breaks form correction." }
+                ],
+                hint: "Guide the user directly to where correction is needed.",
+                tags: ["Validation", "Accessibility", "Week 9"]
+            },
+
+            // Week 10: Asynchronous JavaScript & Promises (Items 61 - 70)
+            {
+                questionNumber: 61,
+                question: "What is Synchronous JavaScript execution?",
+                answerOptions: [
+                    { text: "Each statement finishes before the next begins", isCorrect: true, rationale: "Synchronous JavaScript executes statement by statement where each finishes before the next begins." },
+                    { text: "Work starts now and its result is handled later", isCorrect: false, rationale: "That defines asynchronous JavaScript." },
+                    { text: "Code runs concurrently across multiple CPU cores", isCorrect: false, rationale: "JS runs on a single-threaded event loop model." },
+                    { text: "Network requests execute instantly without delay", isCorrect: false, rationale: "Network operations are inherently asynchronous." }
+                ],
+                hint: "Step-by-step execution in strict order.",
+                tags: ["Async", "Week 10"]
+            },
+            {
+                questionNumber: 62,
+                question: "What does `setTimeout(callback, 0)` with a zero delay do?",
+                answerOptions: [
+                    { text: "Schedules the callback for later execution after current execution stack clears", isCorrect: true, rationale: "A zero delay still schedules work for later after the call stack clears." },
+                    { text: "Executes the callback synchronously on the exact same line", isCorrect: false, rationale: "It schedules it asynchronously via the task queue." },
+                    { text: "Throws a timeout execution error", isCorrect: false, rationale: "Zero delay is valid and executes asynchronously." },
+                    { text: "Cancels all pending timers", isCorrect: false, rationale: "That requires clearTimeout." }
+                ],
+                hint: "Even zero delay defers execution to the event queue.",
+                tags: ["Async", "Timers", "Week 10"]
+            },
+            {
+                questionNumber: 63,
+                question: "What are the three possible states of a Promise?",
+                answerOptions: [
+                    { text: "Pending, fulfilled, or rejected", isCorrect: true, rationale: "A Promise is either pending, fulfilled, or rejected (settled)." },
+                    { text: "Waiting, active, or terminated", isCorrect: false, rationale: "Standard promise terminology is pending, fulfilled, rejected." },
+                    { text: "Loading, success, or error", isCorrect: false, rationale: "Those describe UI states, not Promise states." },
+                    { text: "Synchronous, asynchronous, or blocked", isCorrect: false, rationale: "Unrelated to promise states." }
+                ],
+                hint: "Waiting for result, successfully resolved, or failed.",
+                tags: ["Promises", "Week 10"]
+            },
+            {
+                questionNumber: 64,
+                question: "What methods register fulfillment and rejection handlers on a Promise?",
+                answerOptions: [
+                    { text: "`.then()` and `.catch()`", isCorrect: true, rationale: ".then() and .catch() register fulfillment and rejection handlers." },
+                    { text: "`.success()` and `.failure()`", isCorrect: false, rationale: "Those are jQuery AJAX methods, not native Promise methods." },
+                    { text: "`.resolve()` and `.reject()`", isCorrect: false, rationale: "Those create settled promises." },
+                    { text: "`.wait()` and `.handle()`", isCorrect: false, rationale: "Not native promise methods." }
+                ],
+                hint: "Standard promise chaining methods.",
+                tags: ["Promises", "Week 10"]
+            },
+            {
+                questionNumber: 65,
+                question: "What does declaring a function with `async` do?",
+                answerOptions: [
+                    { text: "Declares a function that returns a Promise", isCorrect: true, rationale: "An async function automatically returns a Promise." },
+                    { text: "Forces all statements inside to execute synchronously", isCorrect: false, rationale: "It enables async/await syntax and promise returns." },
+                    { text: "Disables try...catch error handling", isCorrect: false, rationale: "try...catch works seamlessly with async/await." },
+                    { text: "Spawns a new background web worker thread", isCorrect: false, rationale: "Async functions run on the main thread event loop." }
+                ],
+                hint: "The function will automatically wrap return values in a Promise.",
+                tags: ["Async/Await", "Week 10"]
+            },
+            {
+                questionNumber: 66,
+                question: "What does `await` do inside an async function?",
+                answerOptions: [
+                    { text: "Pauses the current async function until a Promise settles", isCorrect: true, rationale: "await pauses the current async function without blocking the entire browser." },
+                    { text: "Blocks the entire browser main thread completely", isCorrect: false, rationale: "It pauses only the async function, leaving the event loop responsive." },
+                    { text: "Automatically retries failed network requests 3 times", isCorrect: false, rationale: "Retry logic requires custom code." },
+                    { text: "Converts asynchronous code into synchronous blocking code", isCorrect: false, rationale: "It maintains asynchronous non-blocking execution." }
+                ],
+                hint: "Pauses execution of that specific function until the promise resolves.",
+                tags: ["Async/Await", "Week 10"]
+            },
+            {
+                questionNumber: 67,
+                question: "What block handles thrown errors and rejections from awaited Promises?",
+                answerOptions: [
+                    { text: "`try...catch`", isCorrect: true, rationale: "try...catch handles thrown errors and rejections from awaited Promises." },
+                    { text: "`error...rescue`", isCorrect: false, rationale: "That syntax belongs to Ruby, not JavaScript." },
+                    { text: "`protect...recover`", isCorrect: false, rationale: "Not JavaScript syntax." },
+                    { text: "`catch...finally` without try", isCorrect: false, rationale: "Catch requires a preceding try block." }
+                ],
+                hint: "Standard JavaScript exception handling block.",
+                tags: ["Async", "Errors", "Week 10"]
+            },
+            {
+                questionNumber: 68,
+                question: "When should you use `Promise.all`?",
+                answerOptions: [
+                    { text: "When starting independent operations together and awaiting them together", isCorrect: true, rationale: "Promise.all fulfills with all results when independent operations succeed, or rejects if any input rejects." },
+                    { text: "When operations must execute strictly one after another sequentially", isCorrect: false, rationale: "Sequential operations use individual await statements." },
+                    { text: "When you want to catch all errors silently", isCorrect: false, rationale: "Promise.all rejects if any single promise fails." },
+                    { text: "To race multiple promises against each other", isCorrect: false, rationale: "That is Promise.race." }
+                ],
+                hint: "For independent tasks that can run in parallel.",
+                tags: ["Promises", "Week 10"]
+            },
+            {
+                questionNumber: 69,
+                question: "What does the `finally` block do in a `try...catch...finally` statement?",
+                answerOptions: [
+                    { text: "Runs after the try or catch path, useful for restoring controls or clearing loading states", isCorrect: true, rationale: "finally runs regardless of success or failure, making it ideal for cleanup like hiding spinners." },
+                    { text: "Only runs if an unhandled exception occurs", isCorrect: false, rationale: "It runs regardless of whether an exception occurred." },
+                    { text: "Cancels pending asynchronous timers", isCorrect: false, rationale: "Timers require clearTimeout." },
+                    { text: "Returns the final promise resolution value", isCorrect: false, rationale: "Return values in finally are generally ignored." }
+                ],
+                hint: "Executes cleanup code regardless of success or failure.",
+                tags: ["Async", "Errors", "Week 10"]
+            },
+            {
+                questionNumber: 70,
+                question: "What is a common mistake when working with async/await?",
+                answerOptions: [
+                    { text: "Using `try...catch` without awaiting the Promise whose rejection needs to be handled", isCorrect: true, rationale: "For try...catch to catch a rejected Promise, the Promise must be awaited inside the try block." },
+                    { text: "Returning values from async functions", isCorrect: false, rationale: "Returning values is correct." },
+                    { text: "Using async functions inside event listeners", isCorrect: false, rationale: "Common and fully supported." },
+                    { text: "Using Number.isFinite for validation", isCorrect: false, rationale: "That is a best practice." }
+                ],
+                hint: "If you don't await the promise, errors won't be caught by try...catch.",
+                tags: ["Async", "Mistakes", "Week 10"]
+            },
+
+            // Weeks 11 and 12: HTTP and JSON (Items 71 - 80)
+            {
+                questionNumber: 71,
+                question: "What does an HTTP request method indicate?",
+                answerOptions: [
+                    { text: "The requested action to be performed by the server", isCorrect: true, rationale: "Method specifies the requested action (e.g., GET to retrieve, POST to create)." },
+                    { text: "The client browser version and operating system", isCorrect: false, rationale: "Browser info is carried in User-Agent headers." },
+                    { text: "The database encryption algorithm", isCorrect: false, rationale: "Methods define HTTP verbs, not database encryption." },
+                    { text: "The CSS stylesheet format", isCorrect: false, rationale: "HTTP is independent of CSS." }
+                ],
+                hint: "Verbs like GET, POST, PUT, DELETE.",
+                tags: ["HTTP", "Week 11"]
+            },
+            {
+                questionNumber: 72,
+                question: "Which HTTP method is used by default with `fetch()`?",
+                answerOptions: [
+                    { text: "GET", isCorrect: true, rationale: "fetch uses GET by default when no method option is specified." },
+                    { text: "POST", isCorrect: false, rationale: "POST must be explicitly specified in options." },
+                    { text: "PUT", isCorrect: false, rationale: "PUT requires explicit configuration." },
+                    { text: "DELETE", isCorrect: false, rationale: "DELETE requires explicit configuration." }
+                ],
+                hint: "Retrieving data without a body uses this method by default.",
+                tags: ["HTTP", "Fetch", "Week 11"]
+            },
+            {
+                questionNumber: 73,
+                question: "What HTTP status code indicates a successful request?",
+                answerOptions: [
+                    { text: "200 OK", isCorrect: true, rationale: "200 OK represents a successful request. response.ok is true for status codes 200 through 299." },
+                    { text: "404 Not Found", isCorrect: false, rationale: "404 is a client error status." },
+                    { text: "500 Server Error", isCorrect: false, rationale: "500 is a server error status." },
+                    { text: "201 Created", isCorrect: false, rationale: "201 is specifically for resource creation success." }
+                ],
+                hint: "The classic success status code starting with 2.",
+                tags: ["HTTP", "Status Codes", "Week 11"]
+            },
+            {
+                questionNumber: 74,
+                question: "What does `response.ok` evaluate to for HTTP status codes 200 through 299?",
+                answerOptions: [
+                    { text: "`true`", isCorrect: true, rationale: "response.ok is true for status codes 200 through 299, and false otherwise." },
+                    { text: "`false`", isCorrect: false, rationale: "It is true for 200-299." },
+                    { text: "`null`", isCorrect: false, rationale: "It is boolean." },
+                    { text: "Undefined", isCorrect: false, rationale: "It is a boolean property." }
+                ],
+                hint: "Indicates successful status range.",
+                tags: ["HTTP", "Fetch", "Week 11"]
+            },
+            {
+                questionNumber: 75,
+                question: "How does `fetch()` handle HTTP error status codes like 404 or 500?",
+                answerOptions: [
+                    { text: "It normally still fulfills the fetch Promise, so you must check response.ok or status yourself", isCorrect: true, rationale: "HTTP 404 or 500 still fulfills the fetch Promise because a response arrived; check response.ok or status manually." },
+                    { text: "It automatically rejects the fetch Promise", isCorrect: false, rationale: "Fetch only rejects on network failures, not HTTP error status codes." },
+                    { text: "It throws a synchronous SyntaxError", isCorrect: false, rationale: "It fulfills normally." },
+                    { text: "It redirects automatically to an error page", isCorrect: false, rationale: "No automatic redirection occurs." }
+                ],
+                    hint: "Fetch only rejects on network failure, not on 404/500 responses.",
+                tags: ["HTTP", "Fetch", "Week 11"]
+            },
+            {
+                questionNumber: 76,
+                question: "What method parses existing JSON text into JavaScript data?",
+                answerOptions: [
+                    { text: "`JSON.parse(text)`", isCorrect: true, rationale: "JSON.parse(text) parses JSON text, while JSON.stringify converts JS value to JSON text." },
+                    { text: "`JSON.stringify(text)`", isCorrect: false, rationale: "stringify converts JS to JSON string." },
+                    { text: "`JSON.toObject(text)`", isCorrect: false, rationale: "Not a standard method." },
+                    { text: "`response.json()`", isCorrect: false, rationale: "response.json() reads and parses a fetch response stream asynchronously." }
+                ],
+                hint: "Parses a JSON string into a JavaScript object/array.",
+                tags: ["JSON", "Week 11"]
+            },
+            {
+                questionNumber: 77,
+                question: "How do you safely encode query parameters for a URL in JavaScript?",
+                answerOptions: [
+                    { text: "Using `URLSearchParams`", isCorrect: true, rationale: "URLSearchParams safely encodes query values for URLs." },
+                    { text: "Using `encodeURIComponent` manually for every string", isCorrect: false, rationale: "URLSearchParams provides a cleaner structured API for query strings." },
+                    { text: "Concatenating strings directly with `+`", isCorrect: false, rationale: "Manual concatenation is unsafe with special characters." },
+                    { text: "Using `JSON.stringify`", isCorrect: false, rationale: "JSON stringify is for request bodies, not URL query params." }
+                ],
+                hint: "Built-in class designed specifically for URL search parameters.",
+                tags: ["HTTP", "URLSearchParams", "Week 11"]
+            },
+            {
+                questionNumber: 78,
+                question: "What header describes the format of data being sent in a POST or PUT request body?",
+                answerOptions: [
+                    { text: "`Content-Type`", isCorrect: true, rationale: "Content-Type describes the format being sent (e.g., application/json)." },
+                    { text: "`Accept`", isCorrect: false, rationale: "Accept describes the desired response format." },
+                    { text: "`Authorization`", isCorrect: false, rationale: "Authorization carries bearer tokens." },
+                    { text: "`User-Agent`", isCorrect: false, rationale: "User-Agent identifies the client application." }
+                ],
+                hint: "Specifies MIME type of the body data.",
+                tags: ["HTTP", "Headers", "Week 11"]
+            },
+            {
+                questionNumber: 79,
+                question: "What API is used to cancel an ongoing fetch request?",
+                answerOptions: [
+                    { text: "`AbortController`", isCorrect: true, rationale: "AbortController and its signal allow canceling ongoing fetch requests." },
+                    { text: "CancelToken", isCorrect: false, rationale: "CancelToken is used in libraries like Axios, not native fetch." },
+                    { text: "FetchCanceler", isCorrect: false, rationale: "Not a native API." },
+                    { text: "RequestStopper", isCorrect: false, rationale: "Not standard." }
+                ],
+                hint: "Controller class used to abort network operations.",
+                tags: ["HTTP", "AbortController", "Week 11"]
+            },
+            {
+                questionNumber: 80,
+                question: "Where should private API secrets and credentials never be stored?",
+                answerOptions: [
+                    { text: "Hard-coded in browser JavaScript", isCorrect: true, rationale: "Private API secrets should never be hard-coded in browser JavaScript because client code is fully inspectable." },
+                    { text: "In secure backend server environment variables", isCorrect: false, rationale: "Server environment variables are secure." },
+                    { text: "On a secured remote server", isCorrect: false, rationale: "Server storage is appropriate." },
+                    { text: "Behind authenticated API gateways", isCorrect: false, rationale: "Gateways are secure." }
+                ],
+                hint: "Anyone can view client-side JavaScript code in the browser.",
+                tags: ["HTTP", "Security", "Week 11"]
+            }
+        ];
+
+        let quizData = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        function startQuiz() {
+            // Shuffle/Jumble all questions every time the quiz starts or resets
+            quizData = [...originalQuizData].sort(() => Math.random() - 0.5);
+            userAnswers = new Array(quizData.length).fill(null);
+
+            document.getElementById('view-welcome').classList.add('hidden');
+            document.getElementById('view-results').classList.add('hidden');
+            document.getElementById('view-review').classList.add('hidden');
+            document.getElementById('view-quiz').classList.remove('hidden');
+            document.getElementById('quiz-stats-header').classList.remove('hidden');
+            document.getElementById('quiz-stats-header').classList.add('flex');
+
+            currentQuestionIndex = 0;
+            score = 0;
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = quizData[currentQuestionIndex];
+            document.getElementById('current-q-num').textContent = currentQuestionIndex + 1;
+            document.getElementById('header-current-q').textContent = currentQuestionIndex + 1;
+            document.getElementById('header-score').textContent = score;
+            
+            // Progress Bar
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // Tag & Question
+            document.getElementById('question-tag').textContent = q.tags.join(' • ');
+            document.getElementById('question-text').textContent = q.question;
+
+            // Reset Feedback Box & Next Button
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            // Render Options (also randomized)
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            const optionsWithIndex = q.answerOptions.map((opt, idx) => ({ ...opt, originalIndex: idx }));
+            const shuffled = [...optionsWithIndex].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-2xl border border-slate-700/80 bg-slate-800/50 hover:bg-slate-800 hover:border-indigo-500/50 transition-all text-slate-200 text-sm md:text-base font-medium flex items-center justify-between group`;
+                btn.innerHTML = `
+                    <span class="flex items-center space-x-3">
+                        <span class="w-7 h-7 rounded-xl bg-slate-700/80 group-hover:bg-indigo-600/30 group-hover:text-indigo-300 flex items-center justify-center text-xs font-bold text-slate-400 transition-colors">${String.fromCharCode(65 + idx)}</span>
+                        <span>${opt.text}</span>
+                    </span>
+                `;
+                btn.onclick = () => selectOption(opt.isCorrect, opt.text, q, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(isCorrect, selectedText, q, selectedBtn) {
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach(b => b.disabled = true);
+
+            userAnswers[currentQuestionIndex] = {
+                selected: selectedText,
+                isCorrect: isCorrect,
+                question: q
+            };
+
+            if (isCorrect) {
+                score++;
+                document.getElementById('header-score').textContent = score;
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-950/30 text-emerald-200 text-sm md:text-base font-medium flex items-center justify-between shadow-lg shadow-emerald-900/20";
+            } else {
+                selectedBtn.className = "w-full text-left p-4 rounded-2xl border border-rose-500 bg-rose-950/30 text-rose-200 text-sm md:text-base font-medium flex items-center justify-between shadow-lg shadow-rose-900/20";
+                buttons.forEach(b => {
+                    if (b.textContent.includes(q.answerOptions.find(o => o.isCorrect).text)) {
+                        b.className = "w-full text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-950/30 text-emerald-200 text-sm md:text-base font-medium flex items-center justify-between shadow-lg shadow-emerald-900/20";
+                    }
+                });
+            }
+
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.classList.remove('hidden');
+            const feedbackHeader = document.getElementById('feedback-header');
+            const feedbackRationale = document.getElementById('feedback-rationale');
+
+            if (isCorrect) {
+                feedbackBox.className = "p-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 text-sm space-y-2 animate-pop";
+                feedbackHeader.innerHTML = `<span class="text-emerald-400 flex items-center space-x-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg><span>Correct! Excellent work.</span></span>`;
+            } else {
+                feedbackBox.className = "p-4 rounded-2xl border border-rose-500/30 bg-rose-950/20 text-sm space-y-2 animate-pop";
+                feedbackHeader.innerHTML = `<span class="text-rose-400 flex items-center space-x-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg><span>Incorrect. Review the concept below:</span></span>`;
+            }
+
+            const correctOpt = q.answerOptions.find(o => o.isCorrect);
+            feedbackRationale.textContent = correctOpt.rationale;
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('view-quiz').classList.add('hidden');
+            document.getElementById('quiz-stats-header').classList.add('hidden');
+            document.getElementById('view-results').classList.remove('hidden');
+
+            document.getElementById('result-score').textContent = `${score} / 80`;
+            const percentage = Math.round((score / 80) * 100);
+            document.getElementById('result-percentage').textContent = `${percentage}%`;
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        function reviewAnswers() {
+            document.getElementById('view-results').classList.add('hidden');
+            document.getElementById('view-review').classList.remove('hidden');
+
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            userAnswers.forEach((ans, idx) => {
+                const q = quizData[idx];
+                const isCorrect = ans && ans.isCorrect;
+                const userSelectedText = ans ? ans.selected : "No answer selected";
+                const correctOpt = q.answerOptions.find(o => o.isCorrect);
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `p-5 rounded-2xl border ${isCorrect ? 'border-emerald-500/30 bg-emerald-950/10' : 'border-rose-500/30 bg-rose-950/10'} space-y-3`;
+                itemDiv.innerHTML = `
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="px-2.5 py-1 rounded-full font-semibold ${isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+                        <span class="text-slate-400">Question ${idx + 1} • ${q.tags.join(' • ')}</span>
+                    </div>
+                    <h4 class="font-semibold text-white text-sm md:text-base">${q.question}</h4>
+                    <div class="text-xs space-y-1">
+                        <p class="text-slate-300"><span class="font-bold text-slate-400">Your Answer:</span> <span class="${isCorrect ? 'text-emerald-400 font-semibold' : 'text-rose-400 font-semibold'}">${userSelectedText}</span></p>
+                        ${!isCorrect ? `<p class="text-slate-300"><span class="font-bold text-slate-400">Correct Answer:</span> <span class="text-emerald-400 font-semibold">${correctOpt.text}</span></p>` : ''}
+                    </div>
+                    <p class="text-xs text-slate-400 italic bg-slate-900/60 p-3 rounded-xl border border-slate-800"><span class="font-semibold text-slate-300">Rationale:</span> ${correctOpt.rationale}</p>
+                `;
+                reviewList.appendChild(itemDiv);
+            });
+        }
+
+        function backToResults() {
+            document.getElementById('view-review').classList.add('hidden');
+            document.getElementById('view-results').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
